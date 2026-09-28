@@ -1,0 +1,29 @@
+# Baseline condition. Paths are relative to the project root.
+task: tasks/example
+
+agents:
+  count: 5
+  model:
+    id: deepseek/deepseek-v4-flash
+    params:                       # merged verbatim into the OpenRouter request body
+      reasoning: { effort: high }
+      temperature: 0.7
+      max_tokens: 16000
+      # provider: { order: [baidu/fp8] }   # optional; otherwise pinned automatically
+
+environment:
+  doc_read_budget: 3
+  post_max_chars: 800
+  deliverable_max_chars: 20000
+  status_line: true
+  roster_known: false
+  kickoff: "Check the board and introduce yourself before you start."
+  prompt_template: prompts/swarm.md
+
+run:
+  seed: 1
+  tick_cap: 40
+  max_tool_calls_per_step: 10
+  max_concurrency: 8
+  max_cost_usd: 1.00
+  call_timeout_s: 600
