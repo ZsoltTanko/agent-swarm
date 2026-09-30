@@ -12,7 +12,6 @@
 </p>
 
 <p align="center">
-  <a href="#what-weve-seen-so-far">What we've seen</a> ·
   <a href="#a-tour-of-the-observer">Tour</a> ·
   <a href="#how-it-works">How it works</a> ·
   <a href="#quickstart">Quickstart</a>
@@ -21,7 +20,7 @@
 <p align="center">
   <img src="docs/images/hero.gif" alt="The observer UI replaying a five-agent run step by step: the board fills with posts while the timeline marks each agent's reads, posts and deliverable writes" width="100%">
   <br>
-  <sub>Five agents writing one memo together on the example task, replayed step by step. Eight of the twelve drafts they saved overwrote a version the writer had never read.</sub>
+  <sub>Five agents writing one memo together on the example task, replayed step by step.</sub>
 </p>
 
 **What happens when you give a swarm of cheap LLM agents a message board and a job that needs
@@ -38,74 +37,6 @@ Every model call, reasoning trace, post, read receipt and overwrite lands in an 
 observer UI replays it live or step by step, down to the exact request an agent sent and the raw
 response it got back. Runs reproduce exactly from a response cache, and a five-agent, 40-step run
 costs three or four cents.
-
-## What we've seen so far
-
-These are early runs on `deepseek/deepseek-v4-flash` with 5 agents, the 8-document
-[example task](tasks/example), and 3 document reads per agent, unless noted. **Each observation comes
-from a single run.** Treat them as field notes, not results: turning notes like these into
-measurements is what the harness is for.
-
-**1. Identical agents start identically.** In the first 3-agent run, all three agents posted in the
-same step, each announcing it would start with the same three documents, and then each opened
-exactly those: 01, 03 and 07. Nine reads between them, three documents covered. Same model, the same
-prompt apart from a name, the same moment. Breaking that symmetry is the first coordination problem a swarm has to solve.
-
-**2. Coverage collapses, then they poll.** Five agents with three reads each have 15 reads for 8
-documents, enough to cover everything almost twice. They covered 4. Documents 01 and 03 were read by
-all five agents, four documents were never opened, and every agent had spent its whole budget by
-step 3. With no way to wait, they polled: over the last 32 steps they called `read_board` 104
-times, reasoning things like:
-
-> It seems like no one else is reading the remaining documents. Let me check if there are other
-> agents who haven't posted. Let me wait a bit more.
->
-> <sub>Heron's reasoning at step 11</sub>
-
-There was nobody else: all five had posted, and all five were out of reads. The run hit its 40-step
-cap.
-
-**3. Blind overwrites.** In a run with the same setup and seed 2, the deliverable went through 12
-versions. Eight of them replaced a version the writer had never read, including each of the last
-four. The final memo was written over a draft its author never saw.
-
-| Version | v1 | v2 | v3 | v4 | v5 | v6 | v7 | v8 | v9 | v10 | v11 | v12 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Step | 13 | 17 | 19 | 21 | 21 | 23 | 24 | 28 | 28 | 29 | 29 | 30 |
-| Author | Finch | Finch | Finch | Ibis | Finch | Tern | Ibis | Finch | Ibis | Tern | Heron | Moth |
-| Replaced | (first) | seen | seen | **blind** | **blind** | **blind** | **blind** | seen | **blind** | **blind** | **blind** | **blind** |
-
-**4. A `wait` tool changed the dynamics.** Same task, seed and settings as #2, plus a `wait` tool
-that puts an agent to sleep until someone posts. The agents waited 9 times, the team covered 7 of 8
-documents instead of 4, and the first draft landed at step 11 instead of step 16. `read_board` calls
-over the whole run fell from 124 to 54, and the run ended on its own at step 29, with every agent done
-or asleep, instead of running into the cap. Adding a tool changes every request, and this run was
-pinned to a different provider endpoint for the same model, so it's a fresh sample rather than a
-controlled comparison.
-
-| Document | #2: no `wait` | #4: with `wait` |
-|---|---|---|
-| 01 Patron survey | ●●●●● | ●●●● |
-| 02 Staff meeting notes | ●●● | ● |
-| 03 Evening hours: options and costs | ●●●●● | ●●●● |
-| 04 State aid emails | never opened | ●● |
-| 05 After-dark walkthrough | never opened | ● |
-| 06 Radio interview | never opened | ● |
-| 07 Library use by hour | ●● | ●● |
-| 08 Eastside listening session | never opened | never opened |
-
-<sub>One dot per agent that opened the document. Both runs: 5 agents, 3 reads each, seed 1.</sub>
-
-**5. Rubber-stamping.** Ten agents summarized a 20,000-word conversation transcript split into 10
-parts, again with 3 reads each. Part 1 was read by 7 agents, three parts were read by exactly one
-agent, and 6 of the 10 agents read exactly parts 1 to 3. Nine agents then signed off, endorsing the
-summary as capturing "the full argument", including agents who had read only the first 30%.
-
-**6. At 20 agents, the board gets loud.** Twenty agents discussing a ~1,200-word essay posted 135
-messages in 27 steps, then all signed off. The whole run cost $0.21.
-
-Do these hold up across seeds, models, prompts and swarm sizes? Each of those is
-[one config line away](#experiments-one-line-away).
 
 ## What you get
 
@@ -459,13 +390,13 @@ npm run ui:dev       # the UI from Vite with hot reload
 
 ## Status
 
-agent-swarm is a research prototype. The harness, the observer and the metrics work end to end, and
-the observations above come from real runs. It has limits:
+agent-swarm is a research prototype. The harness, the observer and the metrics work end to end. It
+has limits:
 
 - Each run uses one model for every agent. The config and event shapes already carry a model per
   agent, but mixed swarms aren't wired up yet.
-- The observations are single runs. Comparing runs across seeds and conditions is planned, as are
-  forks (re-run to step N, change something, continue from the cache).
+- Comparing runs across seeds and conditions is planned, as are forks (re-run to step N, change
+  something, continue from the cache).
 - The observer serves on 127.0.0.1 only. It is a local tool, not a hosted service.
 
 [DESIGN.md](DESIGN.md) has the full design: the tick engine's exact semantics, endpoint pinning and
