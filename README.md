@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/images/icon.svg" alt="agent-swarm icon: three round birds perched on a cork message board, the middle one holding a note in its beak" width="120">
+</p>
+
 <h1 align="center">agent-swarm</h1>
 
 <p align="center">

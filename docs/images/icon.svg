@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <title>agent-swarm: three birds gathered on a message board</title>
+  <defs>
+    <clipPath id="side-body"><ellipse rx="28" ry="26"/></clipPath>
+    <clipPath id="front-body"><ellipse rx="30" ry="29"/></clipPath>
+  </defs>
+
+  <!-- evening sky -->
+  <rect x="8" y="8" width="240" height="240" rx="56" fill="#2e4a6b"/>
+  <g fill="#fbf7ef">
+    <circle cx="44" cy="52" r="2.2" opacity=".55"/>
+    <circle cx="72" cy="30" r="1.6" opacity=".45"/>
+    <circle cx="182" cy="30" r="1.6" opacity=".45"/>
+    <circle cx="210" cy="44" r="2.6" opacity=".7"/>
+  </g>
+
+  <!-- cork board -->
+  <rect x="30" y="122" width="196" height="100" rx="14" fill="#b0824f"/>
+  <rect x="40" y="132" width="176" height="80" rx="6" fill="#d9b382"/>
+  <g fill="#b0824f" opacity=".6">
+    <circle cx="56" cy="200" r="2"/>
+    <circle cx="126" cy="146" r="2"/>
+    <circle cx="202" cy="200" r="2"/>
+    <circle cx="128" cy="198" r="1.6"/>
+    <circle cx="204" cy="145" r="1.6"/>
+  </g>
+
+  <!-- pinned notes, each pinned in its bird's color -->
+  <g transform="translate(86 173) rotate(-6)">
+    <rect x="-24" y="-21" width="52" height="47" rx="3" fill="#2b2a28" opacity=".16"/>
+    <rect x="-26" y="-24" width="52" height="47" rx="3" fill="#fbf7ef"/>
+    <g fill="#2b2a28" opacity=".22">
+      <rect x="-16" y="-6" width="32" height="4" rx="2"/>
+      <rect x="-16" y="3" width="25" height="4" rx="2"/>
+      <rect x="-16" y="12" width="29" height="4" rx="2"/>
+    </g>
+    <circle cy="-16" r="5" fill="#5aa8a2"/>
+  </g>
+  <g transform="translate(166 171) rotate(5)">
+    <rect x="-22" y="-19" width="48" height="44" rx="3" fill="#2b2a28" opacity=".16"/>
+    <rect x="-24" y="-22" width="48" height="44" rx="3" fill="#fbf7ef"/>
+    <g fill="#2b2a28" opacity=".22">
+      <rect x="-14" y="-4" width="28" height="4" rx="2"/>
+      <rect x="-14" y="5" width="21" height="4" rx="2"/>
+    </g>
+    <circle cy="-14" r="5" fill="#d9504f"/>
+  </g>
+
+  <!-- side birds perched on the frame, facing in -->
+  <g transform="translate(60 95)">
+    <ellipse cx="-25" cy="-10" rx="7" ry="15" transform="rotate(-38 -25 -10)" fill="#5aa8a2"/>
+    <ellipse cx="-25" cy="-10" rx="7" ry="15" transform="rotate(-38 -25 -10)" fill="#2b2a28" opacity=".22"/>
+    <path d="M1 -25C1 -34 9 -37 12 -31" fill="none" stroke="#5aa8a2" stroke-width="5" stroke-linecap="round"/>
+    <ellipse rx="28" ry="26" fill="#5aa8a2"/>
+    <ellipse cx="10" cy="13" rx="16" ry="12" fill="#fbf7ef" opacity=".5" clip-path="url(#side-body)"/>
+    <path d="M-22 -3C-14 -10 -1 -7 2 3C-2 14 -17 12 -22 -3Z" fill="#2b2a28" opacity=".22"/>
+    <circle cx="12" cy="-7" r="5" fill="#2b2a28"/>
+    <circle cx="13.7" cy="-8.8" r="1.7" fill="#fff"/>
+    <ellipse cx="18" cy="3" rx="4.5" ry="3" fill="#e1849a"/>
+    <path d="M26 -5L32 -1.5L26 2Z" fill="#c9a51f" stroke="#c9a51f" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M-6 22v8M6 22v8" stroke="#2b2a28" stroke-width="3.2" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(196 95) scale(-1 1)">
+    <ellipse cx="-25" cy="-10" rx="7" ry="15" transform="rotate(-38 -25 -10)" fill="#d9504f"/>
+    <ellipse cx="-25" cy="-10" rx="7" ry="15" transform="rotate(-38 -25 -10)" fill="#2b2a28" opacity=".22"/>
+    <path d="M1 -25C1 -34 9 -37 12 -31" fill="none" stroke="#d9504f" stroke-width="5" stroke-linecap="round"/>
+    <ellipse rx="28" ry="26" fill="#d9504f"/>
+    <ellipse cx="10" cy="13" rx="16" ry="12" fill="#fbf7ef" opacity=".5" clip-path="url(#side-body)"/>
+    <path d="M-22 -3C-14 -10 -1 -7 2 3C-2 14 -17 12 -22 -3Z" fill="#2b2a28" opacity=".22"/>
+    <circle cx="12" cy="-7" r="5" fill="#2b2a28"/>
+    <circle cx="13.7" cy="-8.8" r="1.7" fill="#fff"/>
+    <ellipse cx="18" cy="3" rx="4.5" ry="3" fill="#e1849a"/>
+    <path d="M26 -5L32 -1.5L26 2Z" fill="#c9a51f" stroke="#c9a51f" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M-6 22v8M6 22v8" stroke="#2b2a28" stroke-width="3.2" stroke-linecap="round"/>
+  </g>
+
+  <!-- middle bird faces out, a note pinched in its beak -->
+  <g transform="translate(128 92)">
+    <path d="M-4 -28C-5 -38 5 -41 8 -34" fill="none" stroke="#e8862a" stroke-width="5" stroke-linecap="round"/>
+    <g transform="rotate(20 -26 7)">
+      <ellipse cx="-26" cy="7" rx="7" ry="12" fill="#e8862a"/>
+      <ellipse cx="-26" cy="7" rx="7" ry="12" fill="#2b2a28" opacity=".22"/>
+    </g>
+    <g transform="rotate(-20 26 7)">
+      <ellipse cx="26" cy="7" rx="7" ry="12" fill="#e8862a"/>
+      <ellipse cx="26" cy="7" rx="7" ry="12" fill="#2b2a28" opacity=".22"/>
+    </g>
+    <ellipse rx="30" ry="29" fill="#e8862a"/>
+    <ellipse cy="19" rx="21" ry="14" fill="#fbf7ef" opacity=".5" clip-path="url(#front-body)"/>
+    <circle cx="-10.5" cy="-7" r="5" fill="#2b2a28"/>
+    <circle cx="10.5" cy="-7" r="5" fill="#2b2a28"/>
+    <circle cx="-8.8" cy="-8.8" r="1.7" fill="#fff"/>
+    <circle cx="12.2" cy="-8.8" r="1.7" fill="#fff"/>
+    <ellipse cx="-19" cy="3" rx="5" ry="3" fill="#e1849a"/>
+    <ellipse cx="19" cy="3" rx="5" ry="3" fill="#e1849a"/>
+    <g transform="translate(-1 0) rotate(-12)">
+      <rect x="-10" y="0" width="21" height="24" rx="2" fill="#fbf7ef"/>
+      <rect x="-6" y="10" width="13" height="3" rx="1.5" fill="#2b2a28" opacity=".25"/>
+      <rect x="-6" y="16" width="9" height="3" rx="1.5" fill="#2b2a28" opacity=".25"/>
+    </g>
+    <path d="M-4.5 -2L4.5 -2L0 4Z" fill="#c9a51f" stroke="#c9a51f" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M-8 26v8M8 26v8" stroke="#2b2a28" stroke-width="3.2" stroke-linecap="round"/>
+  </g>
+</svg>
