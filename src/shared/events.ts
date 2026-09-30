@@ -15,11 +15,15 @@ import type {
  * One line of runs/<run-id>/events.jsonl.
  *
  * Ticks are 1-based (agents see them as "steps"); run_started is tick 0.
- * Within a tick, events appear in the tick's shuffle order. For each agent's step:
+ * Each tick starts with tick_started. Its steps follow in the tick's shuffle order. For each agent's step:
  *   model_call, then for each tool call its domain events (post_created, board_delivered,
  *   document_opened, deliverable_read, deliverable_written, agent_done) followed by its tool_call event;
- *   or agent_slept when the response had no tool calls.
- * agent_woke events come at the end of the tick in which the agent was woken.
+ *   or model_call then agent_slept when the response had no tool calls;
+ *   or agent_stopped alone, with no model_call, when the call failed because the context was too long.
+ * agent_woke events come at the end of the tick in which the agent was woken, in agent-index order.
+ * When a tick's calls end the run (api_error, interrupted), none of its steps are applied: tick_started
+ * is followed directly by run_ended, whose `unapplied` lists that tick's calls that did return a response.
+ * run_ended is always last, with the tick of the last tick started (0 if none was).
  */
 export interface EventBase {
   /** Monotonic from 0 within a run. */
@@ -49,9 +53,18 @@ export interface RunStartedEvent extends EventBase {
   system_prompts: Record<string, string>;
   kickoff: string;
   tools: ToolDefinition[];
-  /** Null for offline re-runs and scripted runs. */
+  mode: RunMode;
+  /** Null when the run made no catalog lookup: scripted and offline runs, and re-runs of a run's run.yaml. */
   model_info: ModelInfo | null;
 }
+
+/**
+ * Where a run's responses came from:
+ * - "live": OpenRouter, with cache hits for requests already in the response cache;
+ * - "offline": the response cache only (--offline), so the run spent nothing;
+ * - "scripted": the scripted fake model (--scripted), whose costs are simulated.
+ */
+export type RunMode = "live" | "offline" | "scripted";
 
 export interface TickStartedEvent extends EventBase {
   type: "tick_started";
@@ -82,6 +95,8 @@ export interface ModelCallEvent extends EventBase {
   system_fingerprint: string | null;
   generation_id: string | null;
   latency_ms: number;
+  /** Requests it took to get the response (1 = no retry). A cache hit carries the original call's count. */
+  attempts: number;
   /** Number of messages in the request. */
   request_messages: number;
 }
@@ -139,7 +154,11 @@ export interface DeliverableWrittenEvent extends EventBase {
 export interface AgentSleptEvent extends EventBase {
   type: "agent_slept";
   agent: string;
+  /** "wait": the agent called wait; "no_tool_calls": its response had no tool calls. */
+  reason: SleepReason;
 }
+
+export type SleepReason = "wait" | "no_tool_calls";
 
 export interface AgentWokeEvent extends EventBase {
   type: "agent_woke";
@@ -159,6 +178,16 @@ export interface AgentStoppedEvent extends EventBase {
   agent: string;
   reason: "context_full";
   detail: string;
+  /** The response-cache entry holding the error response; null when the model client has no cache. */
+  cache_key: string | null;
+}
+
+/** A call of the tick that ended the run that returned a response which was never applied. */
+export interface UnappliedCall {
+  agent: string;
+  cache_key: string;
+  cache_hit: boolean;
+  usage: Usage;
 }
 
 export interface RunEndedEvent extends EventBase {
@@ -166,6 +195,11 @@ export interface RunEndedEvent extends EventBase {
   reason: RunEndReason;
   error: string | null;
   totals: RunTotals;
+  /**
+   * For api_error and interrupted: the calls of the aborted tick that returned anyway, in agent-index
+   * order. They were paid for and cached but have no model_call; totals.usage includes them. Else empty.
+   */
+  unapplied: UnappliedCall[];
 }
 
 export type RunEvent =
@@ -189,6 +223,3 @@ export type RunEventType = RunEvent["type"];
 type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
 /** An event before the log assigns seq, tick, and at. */
 export type RunEventPayload = DistributiveOmit<RunEvent, keyof EventBase>;
-
-/** Fields that legitimately differ between a run and its exact re-run. */
-export const NONDETERMINISTIC_EVENT_FIELDS = ["at", "latency_ms", "cache_hit", "run_id"] as const;

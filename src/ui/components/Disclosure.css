@@ -1,0 +1,48 @@
+.disclosure-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  padding: 3px 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-sm);
+  text-align: left;
+  cursor: pointer;
+}
+.disclosure-toggle:hover .disclosure-label {
+  color: var(--accent);
+}
+.disclosure-toggle .icon {
+  flex: none;
+  color: var(--text-faint);
+}
+
+.disclosure-label {
+  flex: none;
+  font-weight: 500;
+}
+
+.disclosure-meta {
+  flex: none;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.disclosure-preview {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text-faint);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.disclosure-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--space-1) 0 var(--space-2) 18px;
+}

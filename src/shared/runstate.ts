@@ -1,5 +1,6 @@
 import type {
   ModelCallEvent,
+  SleepReason,
   RunEndedEvent,
   RunStartedEvent,
   ToolCallEvent,
@@ -41,7 +42,7 @@ export interface RunState {
   coverage: CoverageCell[];
   /** One entry per tick of the whole run (not cut at the selected tick); activity[i].tick === i + 1. */
   activity: TickActivity[];
-  /** Usage summed up to the selected tick. */
+  /** Usage summed up to the selected tick, including run_ended's unapplied calls once it is reached. */
   usage: Usage;
   metrics: RunMetrics;
 }
@@ -66,8 +67,10 @@ export interface StepRecord {
   deliverable_reads: number[];
   /** Deliverable versions written in this step. */
   deliverable_writes: number[];
-  /** The response had no tool calls; the agent fell asleep. */
+  /** The agent fell asleep at the end of this step: it called wait, or its response had no tool calls. */
   slept: boolean;
+  /** Why it fell asleep; null when it didn't. */
+  sleep_reason: SleepReason | null;
   /** The agent called done in this step. */
   done: boolean;
   /** Set when the agent was stopped in this step. */
@@ -137,7 +140,8 @@ export interface RunMetrics {
   };
   /**
    * Posts made while the author had unread posts: posts by others that existed at the start of the
-   * author's tick and hadn't been delivered to the author before the post_message call.
+   * author's tick and hadn't been delivered to the author before its step. A read_board in the same step
+   * doesn't count, whatever its position: the model wrote the post before any tool result came back.
    */
   posting_blind: { posts: number; with_unread: number };
   deliverable: {

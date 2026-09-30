@@ -1,0 +1,91 @@
+.json-view {
+  position: relative;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1.55;
+  overflow-x: auto;
+}
+
+.json-copy {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+}
+
+.json-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+.json-toggle:disabled {
+  cursor: default;
+}
+
+.json-spacer {
+  display: inline-block;
+  width: 11px;
+}
+
+.json-children {
+  margin-left: 5px;
+  padding-left: 9px;
+  border-left: 1px solid var(--border);
+}
+
+.json-row {
+  padding-left: 14px;
+  overflow-wrap: anywhere;
+}
+
+.json-key {
+  color: var(--text-muted);
+}
+
+.json-summary {
+  color: var(--text-faint);
+}
+
+.json-hint {
+  margin-left: 6px;
+  color: var(--text-muted);
+}
+
+.json-string {
+  color: var(--text);
+}
+
+.json-string-full {
+  display: block;
+}
+
+.json-string-text {
+  display: block;
+  margin-top: 2px;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--panel);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.json-literal {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.json-more {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+}

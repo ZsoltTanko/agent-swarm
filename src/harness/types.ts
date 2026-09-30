@@ -1,5 +1,5 @@
 import type { RunConfig } from "../shared/config.ts";
-import type { ModelInfo, RunEvent, RunEventPayload } from "../shared/events.ts";
+import type { ModelInfo, RunEvent, RunEventPayload, RunMode, UnappliedCall } from "../shared/events.ts";
 import type {
   AgentInfo,
   AssistantMessage,
@@ -25,6 +25,8 @@ export interface CallContext {
   agent: string;
   tick: number;
   seed: number;
+  /** Aborting it cancels the call: the request in flight and any backoff wait (a ModelCallError of kind "interrupted"). */
+  signal?: AbortSignal;
 }
 
 export interface ModelResult {
@@ -40,6 +42,8 @@ export interface ModelResult {
   latency_ms: number;
   cache_key: string;
   cache_hit: boolean;
+  /** Requests it took to get the response (1 = no retry); a cache hit carries the original call's count. */
+  attempts: number;
 }
 
 export type ModelCallErrorKind =
@@ -48,7 +52,9 @@ export type ModelCallErrorKind =
   /** The request exceeded the model's context window: the agent stops with context_full. */
   | "context_length"
   /** --offline and the response isn't cached. */
-  | "cache_miss";
+  | "cache_miss"
+  /** CallContext.signal was aborted. */
+  | "interrupted";
 
 export class ModelCallError extends Error {
   constructor(
@@ -56,6 +62,8 @@ export class ModelCallError extends Error {
     readonly kind: ModelCallErrorKind,
     readonly status: number | null = null,
     readonly body: unknown = null,
+    /** The response-cache entry holding this outcome, for a context_length error that was cached. */
+    readonly cacheKey: string | null = null,
   ) {
     super(message);
     this.name = "ModelCallError";
@@ -74,7 +82,7 @@ export interface LoadedDocument {
 }
 
 export interface LoadedTask {
-  /** Basename of the task directory. */
+  /** The config's task_name, else the basename of the task directory. */
   name: string;
   /** Absolute path of the task directory. */
   dir: string;
@@ -120,10 +128,14 @@ export interface EngineOptions {
   tools: ToolDefinition[];
   model: ModelClient;
   log: EventLogWriter;
-  /** Null for offline re-runs and scripted runs. */
+  mode: RunMode;
+  /** Null when the run made no catalog lookup: scripted and offline runs, and re-runs of a run's run.yaml. */
   modelInfo: ModelInfo | null;
   onTick?: (summary: TickSummary) => void;
-  /** Aborting ends the run with reason "interrupted" after the in-flight tick's calls settle. */
+  /**
+   * Aborting ends the run with reason "interrupted": the signal is passed to every model call, so the
+   * calls in flight are cancelled, and the tick they belong to isn't applied.
+   */
   signal?: AbortSignal;
 }
 
@@ -131,5 +143,7 @@ export interface RunOutcome {
   reason: RunEndReason;
   error: string | null;
   totals: RunTotals;
+  /** As in run_ended. */
+  unapplied: UnappliedCall[];
   finalDeliverable: string;
 }

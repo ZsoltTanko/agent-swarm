@@ -1,0 +1,284 @@
+.inspector {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.insp-clear {
+  width: 22px;
+  height: 22px;
+  margin-left: auto;
+  border-color: transparent;
+}
+
+.insp-body {
+  padding: var(--space-3);
+}
+
+.insp-hint {
+  margin: 0 0 var(--space-3);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.insp-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin-bottom: var(--space-3);
+}
+
+.insp-head-main {
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+.insp-head-flags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.insp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: var(--space-3);
+}
+
+.insp-section {
+  margin: 0 0 var(--space-4);
+}
+
+.insp-section-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin: 0 0 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+.insp-section-aside {
+  color: var(--text-faint);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.insp-facts {
+  display: grid;
+  grid-template-columns: minmax(96px, max-content) 1fr;
+  gap: 3px 12px;
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.insp-fact {
+  display: contents;
+}
+
+.insp-fact dt {
+  color: var(--text-muted);
+}
+
+.insp-fact dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.insp-ellipsis {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+  white-space: nowrap;
+}
+
+.insp-p {
+  margin: 4px 0;
+  font-size: var(--text-sm);
+}
+
+.insp-text {
+  font-size: var(--text-md);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.insp-text.mono {
+  font-size: var(--text-xs);
+  line-height: 1.55;
+}
+
+.insp-post-text {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.insp-more {
+  margin-top: 3px;
+  font-size: var(--text-xs);
+}
+
+.insp-warn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--warning);
+}
+
+.insp-label {
+  margin-bottom: 2px;
+  color: var(--text-faint);
+  font-size: var(--text-xs);
+}
+
+.insp-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+}
+
+.insp-steplink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.insp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  font-size: var(--text-sm);
+  list-style: none;
+}
+
+.insp-notice {
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-subtle);
+  font-size: var(--text-sm);
+}
+.insp-notice p {
+  margin: 0 0 var(--space-2);
+}
+
+/* Tool calls. */
+.insp-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.insp-tool {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+.insp-tool.has-error {
+  border-color: var(--danger);
+}
+
+.insp-tool-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.insp-tool-name {
+  font-weight: 600;
+}
+
+.insp-tool-args {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0 0 6px;
+}
+
+.insp-arg {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 8px;
+}
+.insp-arg dt {
+  color: var(--text-muted);
+}
+.insp-arg dd {
+  min-width: 0;
+  margin: 0;
+}
+
+.insp-tool-result {
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+}
+
+/* Post snippets (reply parent, replies). */
+.insp-snippet {
+  margin-bottom: 6px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.insp-snippet-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-sm);
+}
+
+.insp-snippet-text {
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  white-space: pre-wrap;
+}
+
+.insp-diff {
+  max-height: 420px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: auto;
+}
+
+.insp-agents {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+}
+.insp-agents li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+}
+.insp-agents .link-btn {
+  color: var(--text);
+}

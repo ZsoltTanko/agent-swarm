@@ -1,0 +1,335 @@
+.timeline {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.tl-legend {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: 3px 12px;
+  padding: 6px var(--space-3);
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.tl-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.tl-legend-asleep {
+  display: inline-block;
+  width: 14px;
+  border-top: 2px dotted var(--border-strong);
+}
+
+.tl-scroll {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: var(--panel);
+}
+
+.tl-grid {
+  display: grid;
+  width: max-content;
+  min-width: 100%;
+}
+
+/* Rows are only for structure; their cells are grid items so sticky positioning works. */
+.tl-row {
+  display: contents;
+}
+
+.tl-left {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-width: 0;
+  height: 40px;
+  padding: 0 8px 0 6px;
+  border-right: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.tl-row-selected > .tl-left {
+  background: var(--accent-bg);
+}
+
+.tl-agent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 2px 4px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+.tl-agent:hover .tl-agent-name {
+  text-decoration: underline;
+}
+
+.tl-agent-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tl-status {
+  display: inline-flex;
+  color: var(--text-muted);
+}
+.tl-status-done {
+  color: var(--success);
+}
+.tl-status-stopped {
+  color: var(--warning);
+}
+
+.tl-left-stats {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+.tl-left-stats > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Header row. */
+.tl-head > * {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  height: 26px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+.tl-head > .tl-corner {
+  z-index: 3;
+  height: 26px;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: 500;
+}
+
+.tl-tick {
+  display: flex;
+  align-items: stretch;
+  border-right: 1px solid var(--border);
+}
+.tl-tick.selected {
+  background: var(--accent-bg);
+}
+.tl-tick.future {
+  background: var(--bg-subtle);
+}
+
+.tl-tick-btn {
+  flex: 1;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  cursor: pointer;
+}
+.tl-tick-btn:hover {
+  color: var(--text);
+}
+.tl-tick.selected .tl-tick-btn {
+  color: var(--accent);
+  font-weight: 600;
+}
+.tl-tick.future .tl-tick-btn {
+  color: var(--text-faint);
+}
+.tl-tick-btn:focus-visible {
+  outline-offset: -2px;
+}
+
+/* Cells. */
+.tl-cell {
+  position: relative;
+  display: flex;
+  height: 40px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.tl-cell.selected-col {
+  background: var(--accent-bg);
+}
+
+.tl-cell.future {
+  background: var(--bg-subtle);
+  opacity: 0.55;
+}
+
+.tl-cell.asleep {
+  align-items: center;
+  justify-content: center;
+  color: var(--text-faint);
+}
+.tl-cell.asleep::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 3px;
+  left: 3px;
+  border-top: 2px dotted var(--border-strong);
+}
+.tl-cell.asleep > .icon {
+  position: relative;
+  padding: 1px;
+  background: var(--panel);
+  border-radius: 50%;
+}
+
+.tl-cell.pending {
+  align-items: center;
+  justify-content: center;
+  color: var(--text-faint);
+}
+
+.tl-step {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-content: center;
+  gap: 1px 2px;
+  min-width: 0;
+  /* A step with many kinds of action is cut off here; the hover card and the label list them all. */
+  overflow: hidden;
+  padding: 3px 3px 3px 6px;
+  border: 0;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+/* A thin bar in the agent's color marks every cell where the agent took a step. */
+.tl-step::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 2px;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--agent-color, var(--border-strong));
+}
+.tl-step:hover {
+  background: var(--bg-subtle);
+}
+.tl-step:focus-visible {
+  outline-offset: -2px;
+}
+
+.tl-cell.rel-primary .tl-step {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  background: var(--accent-bg);
+}
+.tl-cell.rel-secondary .tl-step {
+  outline: 1px dashed var(--accent);
+  outline-offset: -2px;
+}
+
+/* Action icons. */
+.tl-action {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-muted);
+}
+.tl-action-count {
+  margin-left: -1px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1;
+  align-self: flex-end;
+}
+.tl-action-write {
+  color: var(--text);
+}
+.tl-action-list,
+.tl-action-doc-reopen {
+  color: var(--text-faint);
+}
+.tl-action-done {
+  color: var(--success);
+}
+.tl-action-error {
+  color: var(--danger);
+}
+.tl-action-stop,
+.tl-action-truncated {
+  color: var(--warning);
+}
+.tl-action-wake {
+  color: var(--text-faint);
+}
+
+/* Hover card. */
+.tl-tooltip {
+  position: fixed;
+  z-index: 50;
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--panel-raised);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--text) 14%, transparent);
+  font-size: var(--text-sm);
+  pointer-events: none;
+}
+
+.tl-tooltip-title {
+  margin-bottom: 4px;
+}
+
+.tl-tooltip-calls {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+.tl-tooltip-call {
+  overflow: hidden;
+  color: var(--text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tl-tooltip-call.tl-action-error {
+  color: var(--danger);
+  white-space: normal;
+}
+
+.tl-tooltip-usage {
+  margin-top: 5px;
+  padding-top: 5px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}

@@ -9,6 +9,7 @@ agents:
       reasoning: { effort: high }
       temperature: 0.7
       max_tokens: 8000
+      provider: { order: [streamlake/fp8] }
 
 environment:
   doc_read_budget: 3

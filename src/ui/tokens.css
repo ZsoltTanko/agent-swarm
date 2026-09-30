@@ -1,0 +1,128 @@
+:root {
+  color-scheme: light dark;
+
+  --bg: #f7f7f5;
+  --bg-subtle: #efeeeb;
+  --panel: #ffffff;
+  --panel-raised: #ffffff;
+  --border: #e2e0db;
+  --border-strong: #cbc8c1;
+  --text: #1c1c1a;
+  --text-muted: #62615c;
+  --text-faint: #96948d;
+
+  --accent: #2f6fdb;
+  --accent-bg: #e7effc;
+  --danger: #c0392b;
+  --danger-bg: #fbeae8;
+  --warning: #9a6200;
+  --warning-bg: #fcf1dc;
+  --success: #2e7d32;
+  --success-bg: #e6f3e7;
+  --highlight: #fff1a8;
+  --diff-add-bg: #dff3e1;
+  --diff-add-text: #1f5f24;
+  --diff-del-bg: #fbe3e1;
+  --diff-del-text: #8e2a20;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --text-xs: 11px;
+  --text-sm: 12px;
+  --text-md: 13px;
+  --text-lg: 15px;
+
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+
+  /* Agent identity colors, by AgentInfo.index. Mid tones that read on light and dark backgrounds. */
+  --agent-0: #4e79a7;
+  --agent-1: #e8862a;
+  --agent-2: #4f9a45;
+  --agent-3: #d9504f;
+  --agent-4: #a870a0;
+  --agent-5: #5aa8a2;
+  --agent-6: #c9a51f;
+  --agent-7: #e1849a;
+  --agent-8: #93705a;
+  --agent-9: #8c8a86;
+  --agent-10: #1fa9ba;
+  --agent-11: #a3a524;
+
+  /*
+   * Text on an agent color: the color darkened until it contrasts 7:1 with it, or black where even black
+   * can't reach 7:1. At least 4.5:1 on every tone (tests/ui-tokens.test.ts checks it).
+   */
+  --agent-0-ink: #000000;
+  --agent-1-ink: #1b1005;
+  --agent-2-ink: #000000;
+  --agent-3-ink: #000000;
+  --agent-4-ink: #000000;
+  --agent-5-ink: #080e0e;
+  --agent-6-ink: #251e06;
+  --agent-7-ink: #1c1013;
+  --agent-8-ink: #000000;
+  --agent-9-ink: #000000;
+  --agent-10-ink: #020c0e;
+  --agent-11-ink: #141404;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141413;
+    --bg-subtle: #1c1c1a;
+    --panel: #1f1f1d;
+    --panel-raised: #262624;
+    --border: #33322f;
+    --border-strong: #46443f;
+    --text: #ecebe7;
+    --text-muted: #a9a79f;
+    --text-faint: #75736c;
+
+    --accent: #7aa7f5;
+    --accent-bg: #1f2c44;
+    --danger: #f07a6e;
+    --danger-bg: #3d2220;
+    --warning: #e0b152;
+    --warning-bg: #3a2e17;
+    --success: #7cc47f;
+    --success-bg: #1f3321;
+    --highlight: #5a4d12;
+    --diff-add-bg: #1f3a22;
+    --diff-add-text: #a6dfa9;
+    --diff-del-bg: #43211e;
+    --diff-del-text: #f3aca4;
+
+    --agent-0: #6f9bd0;
+    --agent-1: #f2a04e;
+    --agent-2: #6fbd64;
+    --agent-3: #ec7473;
+    --agent-4: #c792bf;
+    --agent-5: #78c5bf;
+    --agent-6: #dcbc45;
+    --agent-7: #eea0b3;
+    --agent-8: #b89279;
+    --agent-9: #a7a5a0;
+    --agent-10: #45c3d3;
+    --agent-11: #c0c24a;
+
+    --agent-0-ink: #050609;
+    --agent-1-ink: #352311;
+    --agent-2-ink: #152413;
+    --agent-3-ink: #0c0606;
+    --agent-4-ink: #1d161c;
+    --agent-5-ink: #1d2f2e;
+    --agent-6-ink: #393012;
+    --agent-7-ink: #38252a;
+    --agent-8-ink: #0c0908;
+    --agent-9-ink: #1b1b1a;
+    --agent-10-ink: #102c30;
+    --agent-11-ink: #313113;
+  }
+}

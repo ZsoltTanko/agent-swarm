@@ -1,0 +1,101 @@
+.run-view {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 0;
+  background: var(--bg);
+}
+
+.run-pending-bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+
+/* Board | center tabs | inspector. Each column scrolls on its own. */
+.run-body {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(300px, 26%) minmax(0, 1fr) minmax(340px, 30%);
+  gap: 1px;
+  min-height: 0;
+  background: var(--border);
+  border-top: 1px solid var(--border);
+}
+
+.run-body > .panel {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.run-center {
+  display: flex;
+  flex-direction: column;
+}
+
+.run-tabs {
+  display: flex;
+  flex: none;
+  align-items: stretch;
+  gap: 0;
+  min-height: 34px;
+  padding: 0 4px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  overflow-x: auto;
+}
+
+.run-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 8px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.run-tab:hover {
+  color: var(--text);
+}
+.run-tab[aria-selected="true"] {
+  border-bottom-color: var(--accent);
+  color: var(--text);
+}
+.run-tab:focus-visible {
+  outline-offset: -2px;
+}
+
+.run-tab-detail {
+  padding: 0 4px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  line-height: 16px;
+}
+
+/* Views fill this box; a view that wants its own scroll areas can use height: 100%. */
+.run-tabpanel {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.run-board,
+.run-inspector {
+  display: flex;
+  flex-direction: column;
+}

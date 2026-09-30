@@ -1,0 +1,130 @@
+.docs-root {
+  container-type: inline-size;
+}
+
+.docs-grid {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(200px, 36%) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  min-height: 0;
+}
+
+.docs-list-pane,
+.docs-reader-pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.docs-list-pane {
+  border-right: 1px solid var(--border);
+}
+
+.docs-list {
+  margin: 0;
+  padding: var(--space-1) 0;
+  list-style: none;
+}
+
+.docs-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: 6px var(--space-3);
+  border: 0;
+  border-left: 2px solid transparent;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.docs-item:hover {
+  background: var(--bg-subtle);
+}
+.docs-item.is-selected {
+  border-left-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.docs-item-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+.docs-item-id {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+}
+.docs-item-words {
+  flex: none;
+  margin-left: auto;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+.docs-item-title {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.docs-item-openers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px var(--space-2);
+  font-size: var(--text-xs);
+}
+.docs-opener {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-muted);
+}
+.docs-opener-step {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.docs-unread {
+  color: var(--danger);
+  font-weight: 500;
+}
+
+.docs-reader-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.docs-reader-body {
+  padding: var(--space-3) var(--space-4);
+}
+
+.docs-reader-openers {
+  margin: 0 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+@container (max-width: 560px) {
+  .docs-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 38%) minmax(0, 1fr);
+  }
+  .docs-list-pane {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+}

@@ -7,6 +7,7 @@ export const TOOL_NAMES = [
   "read_document",
   "read_deliverable",
   "write_deliverable",
+  "wait",
   "done",
 ] as const;
 export type ToolName = (typeof TOOL_NAMES)[number];
@@ -125,8 +126,16 @@ export interface DeliverableVersion {
 
 export type AgentStatus = "awake" | "asleep" | "done" | "stopped";
 
+/**
+ * Why a run ended. After a tick, the first of all_done, all_stopped, quiescent, cost_cap, and tick_cap
+ * that applies is the reason; api_error and interrupted end a tick before it is applied.
+ */
 export type RunEndReason =
+  /** Every agent called done. */
   | "all_done"
+  /** Every agent is done or stopped, and at least one was stopped (context_full). */
+  | "all_stopped"
+  /** No agent is awake after the wakes: every agent is asleep, done, or stopped. */
   | "quiescent"
   | "tick_cap"
   | "cost_cap"
@@ -135,8 +144,10 @@ export type RunEndReason =
 
 export interface RunTotals {
   ticks: number;
+  /** model_call events: the calls whose responses were applied. */
   model_calls: number;
   cache_hits: number;
+  /** Every response received, including the unapplied ones listed in run_ended. */
   usage: Usage;
   posts: number;
   deliverable_versions: number;

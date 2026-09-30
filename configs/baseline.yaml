@@ -9,13 +9,15 @@ agents:
       reasoning: { effort: high }
       temperature: 0.7
       max_tokens: 16000
-      # provider: { order: [baidu/fp8] }   # optional; otherwise pinned automatically
+      # Pinned so runs stay comparable across days; measured ~45 tok/s, ~3 s median call, >75% of prompt tokens cached.
+      provider: { order: [streamlake/fp8] }
 
 environment:
   doc_read_budget: 3
   post_max_chars: 800
   deliverable_max_chars: 20000
   status_line: true
+  wait_tool: true
   roster_known: false
   kickoff: "Check the board and introduce yourself before you start."
   prompt_template: prompts/swarm.md
