@@ -9,6 +9,7 @@
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178c6">
   <img alt="Models via OpenRouter" src="https://img.shields.io/badge/models-OpenRouter-6467f2">
   <img alt="Status: research prototype" src="https://img.shields.io/badge/status-research%20prototype-b8860b">
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue"></a>
 </p>
 
 <p align="center">
@@ -401,3 +402,7 @@ has limits:
 
 [DESIGN.md](DESIGN.md) has the full design: the tick engine's exact semantics, endpoint pinning and
 validation, retries, the cache key, every event type, the metrics, and what's planned next.
+
+## License
+
+[MIT](LICENSE)
